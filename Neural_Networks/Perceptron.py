@@ -10,7 +10,7 @@ def generate_Y_data(X_train):
     Y_train=[]
 
     for point in range(n_points):
-        if X_train[point,0] > X_train[point,1]:
+        if X_train[point,0] > -5 * X_train[point,1] + 0.6:
             Y_train.append(1)
         else:    
             Y_train.append(-1)
@@ -30,11 +30,12 @@ class Custom_Perceptron:
     def __init__(self, n_points, n_features, train_test_split, learning_rate):
         
         # Initialization
-        self.weights = np.expand_dims(np.random.random((n_features)), axis=0)
+        self.weights = np.expand_dims(np.random.random((n_features + 1)), axis=0)
         self.n_points = n_points
         self.n_features = n_features
         self.train_test_split = train_test_split
         self.learning_rate = learning_rate
+        self.bias = np.expand_dims(np.ones(n_points), axis=1)
 
 
     def generate_data(self):
@@ -43,9 +44,10 @@ class Custom_Perceptron:
         high = -np.ones((self.n_points, self.n_features),'float')
 
         X_total = np.random.uniform(-1, 1, (self.n_points, self.n_features))
+        X_total = np.concatenate((X_total,self.bias),axis=1)
         Y_total = generate_Y_data(X_total)
 
-        n_train = int(self.n_points*self.train_test_split)
+        n_train = int(self.n_points * self.train_test_split)
         n_test = self.n_points - n_train
     
         self.X_train = X_total[:n_train,:]
@@ -82,7 +84,7 @@ class Custom_Perceptron:
             error_test = self.Y_test[point] - X_guess_test
 
             Guess_Array_test.append(X_guess_test)
-            Error_Array_test.append(error_test)
+            Error_Array_test.append(abs(error_test)/2)
 
         self.projection = np.array(Guess_Array_test)
         self.test_error = Error_Array_test
