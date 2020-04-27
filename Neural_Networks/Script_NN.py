@@ -78,8 +78,11 @@ if __name__ == "__main__":
 
     aim = perceptron.weights[0][1]/perceptron.weights[0][0]
     bias = perceptron.weights[0][2]
+    n_error = sum(perceptron.test_error)
+    error_rate = n_error/perceptron.Y_test.size
 
-    print("Equation is: Y = {}*X + {}".format(aim, bias))
-    print("Total number of error is: {}".format(sum(perceptron.test_error)))
+    print("Equation is: Y = {}*X + {}".format(round(aim,3), round(bias,3)))
+    print("Total number of error is: {}".format(n_error))
+    print("Error rate is: {}".format(error_rate))
 
     plot_results(perceptron)
