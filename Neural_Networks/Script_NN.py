@@ -34,7 +34,6 @@ def plot_results(perceptron):
         perceptron.X_train, 
         perceptron.Y_train
     )
-    np.expand_dims(perceptron.projection, axis=0)
 
     test_data_feature_1, test_data_feature_2 = modify_dataset(
         perceptron.X_test, 
