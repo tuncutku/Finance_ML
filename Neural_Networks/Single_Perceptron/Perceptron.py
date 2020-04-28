@@ -10,7 +10,7 @@ def generate_Y_data(X_train):
     Y_train=[]
 
     for point in range(n_points):
-        if X_train[point,0] > -5 * X_train[point,1] + 0.6:
+        if X_train[point,1] > -5 * X_train[point,0] + 2:
             Y_train.append(1)
         else:    
             Y_train.append(-1)

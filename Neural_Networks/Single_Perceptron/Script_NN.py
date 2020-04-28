@@ -72,7 +72,7 @@ def plot_results(perceptron):
 
 if __name__ == "__main__":
 
-    n_points = 10000
+    n_points = 1000
 
     perceptron = generate_dataset_and_train(n_points)
 
