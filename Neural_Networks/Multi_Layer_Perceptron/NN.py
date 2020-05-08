@@ -39,9 +39,9 @@ class Neural_Network():
         # TODO will create a loop to facilitate more layers
         self.Train_1_b = np.concatenate((X_train, np.ones((1,1))), axis=0)
         h_matrix = np.matmul(self.weights_h, self.Train_1_b)
-        h_matrix_b = np.concatenate((h_matrix, np.ones((1,1))),axis=0)
-        self.h_values_b = v_sigmoid(h_matrix_b)
-        o_matrix = np.matmul(self.weights_o, self.h_values_b)
+        self.h_values = v_sigmoid(h_matrix)
+        self.h_matrix_b = np.concatenate((self.h_values, np.ones((1,1))),axis=0)
+        o_matrix = np.matmul(self.weights_o, self.h_matrix_b)
         return v_sigmoid(o_matrix)
 
     def train_data(self, Y_train, o_values):   
@@ -50,19 +50,19 @@ class Neural_Network():
 
         # Calculate errors
         error_o = Y_train - o_values
-
-        error_h = np.matmul(self.weights_o.T, error_o)
+        error_min_b = np.delete(self.weights_o, -1, axis=1)
+        error_h = np.matmul(error_min_b.T, error_o)
 
         # Backprobagation
         d_error_2 = v_d_sigmoid(o_values)
         d_weights_o = np.matmul(
             self.learning_rate * np.multiply(error_o, d_error_2), 
-            self.h_values_b.T)
+            self.h_matrix_b.T)
 
-        d_error_1 = v_d_sigmoid(self.h_values_b)
+        d_error_1 = v_d_sigmoid(self.h_values)
         d_weights_h = np.matmul(
             self.learning_rate * np.multiply(error_h, d_error_1), 
-            self.X_train.T).T
+            self.Train_1_b.T)
 
         # Adjust the weights
         self.weights_h += d_weights_h

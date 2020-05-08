@@ -8,7 +8,7 @@ def genereate_train_data():
 
     return X_train, Y_train
 
-def setup(n_input=2, n_hidden=2, n_output=1, learning_rate=0.1):
+def setup(n_input=2, n_hidden=3, n_output=1, learning_rate=0.9):
 
     # Generate train data
     X_train, Y_train = genereate_train_data()
@@ -17,7 +17,7 @@ def setup(n_input=2, n_hidden=2, n_output=1, learning_rate=0.1):
 
     np.random.seed(42)
 
-    for _ in range(1000):
+    for _ in range(10000):
 
         shuffle = np.random.choice([0, 1, 2, 3])
         o_values = NN.feed_forward(np.expand_dims(X_train[shuffle], axis=1))
