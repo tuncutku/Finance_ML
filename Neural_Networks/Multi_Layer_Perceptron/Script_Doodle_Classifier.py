@@ -58,10 +58,10 @@ def plot_data(data, n_row = 10, n_column = 10):
 
 if __name__ == "__main__":
     
-    sample_number = 1000
+    sample_number = 10000
     X_train, X_test, Y_train, Y_test = create_data(sample_number)
 
-    learning_rate = 0.8
+    learning_rate = 0.2
     n_input = X_train.shape[1]
     n_output = Y_train.shape[1]
     n_hidden = 64
@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
     NN = Neural_Network(n_input, n_hidden, n_output, learning_rate)
 
-    train_values = np.zeros((2400,3,1))
+    train_values = np.zeros((sample_number,3,1))
     
     for idx in range(n_sample):
 
@@ -84,4 +84,5 @@ if __name__ == "__main__":
         test_values[jdx] = NN.feed_forward(np.expand_dims(X_train[jdx], axis=1))
 
     plot_data(X_test, n_row = 10, n_column = 1)
+
 
